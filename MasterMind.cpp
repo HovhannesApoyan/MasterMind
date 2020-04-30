@@ -340,6 +340,17 @@ void MasterMind::input_Number(std::vector<int>& CurrentNumber, std::string& str)
 		str.push_back(s1[0]);
 	}
 }
+const int& MasterMind::Intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber) const
+{
+	std::vector<int> sortRememberedNumber = rememberedNumber;
+	std::vector<int> sortCurrentNumber = CurrentNumber;
+	std::stable_sort(sortRememberedNumber.begin(), sortRememberedNumber.end());
+	std::stable_sort(sortCurrentNumber.begin(), sortCurrentNumber.end());
+	std::vector<int> firstIntersec;
+	std::set_intersection(sortRememberedNumber.begin(), sortRememberedNumber.end()
+		, sortCurrentNumber.begin(), sortCurrentNumber.end(), std::back_inserter(firstIntersec));
+	return firstIntersec.size();
+}
 bool MasterMind::Numbers_Check(const std::vector<int>& CurrentNumber
 	, const std::vector<int>& rememberedNumber, std::vector<std::string>& Info
 	, int& CountCorrectDigit, int& CountCorrectPosition)
@@ -351,14 +362,7 @@ bool MasterMind::Numbers_Check(const std::vector<int>& CurrentNumber
 		if (CurrentNumber[j] == rememberedNumber[j])
 			++CountCorrectPosition;
 	}
-	std::vector<int> sortRememberedNumber = rememberedNumber;
-	std::vector<int> sortCurrentNumber = CurrentNumber;
-	std::stable_sort(sortRememberedNumber.begin(), sortRememberedNumber.end());
-	std::stable_sort(sortCurrentNumber.begin(), sortCurrentNumber.end());
-	std::vector<int> firstIntersec;
-	std::set_intersection(sortRememberedNumber.begin(), sortRememberedNumber.end()
-		, sortCurrentNumber.begin(), sortCurrentNumber.end(), std::back_inserter(firstIntersec));
-	CountCorrectDigit = firstIntersec.size();
+	CountCorrectDigit = Intersection(rememberedNumber, CurrentNumber);
 
 	if (CountCorrectDigit == this->countDigits && CountCorrectPosition == this->countDigits)
 	{
@@ -385,14 +389,7 @@ void MasterMind::Update_List(std::vector<std::vector<int>>& list
 			if (CurrentNumber[j] == list[i][j])
 				++CountCorrectPosition;
 		}
-		std::vector<int> sortRememberedNumber = CurrentNumber;
-		std::vector<int> sortCurrentNumber = list[i];
-		std::stable_sort(sortRememberedNumber.begin(), sortRememberedNumber.end());
-		std::stable_sort(sortCurrentNumber.begin(), sortCurrentNumber.end());
-		std::vector<int> firstIntersec;
-		std::set_intersection(sortRememberedNumber.begin(), sortRememberedNumber.end()
-			, sortCurrentNumber.begin(), sortCurrentNumber.end(), std::back_inserter(firstIntersec));
-		int CountCorrectDigit = firstIntersec.size();
+		int CountCorrectDigit = Intersection(CurrentNumber, list[i]);
 		if (CountCorrectDigit == Digit && CountCorrectPosition == Position)
 		{
 			CurrentList.push_back(list[i]);

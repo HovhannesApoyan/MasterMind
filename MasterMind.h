@@ -18,6 +18,7 @@ public:
 	void menu();
 
 	void input_Number(std::vector<int>& CurrentNumber, std::string& str);
+	const int& Intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber)const;
 	bool Numbers_Check(const std::vector<int>& CurrentNumber
 		, const std::vector<int>& rememberedNumber, std::vector<std::string>& Info
 		, int& CountCorrectDigit, int& CountCorrectPosition);
