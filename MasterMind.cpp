@@ -282,7 +282,6 @@ void MasterMind::Play_Computer()
 		srand(time(0));
 		int index = rand() % computer.size();
 		std::vector<int> currentNumber = computer[index];
-
 		for (int i = 0; i < this->countDigits; ++i)
 		{
 			std::cout << currentNumber[i] << " ";
