@@ -3,28 +3,28 @@
 #include <string>
 #include <iomanip>
 #include <algorithm>
-#include<time.h>
+#include <time.h>
 #include "MasterMind.h"
 
 MasterMind::MasterMind()
-	:countDigits(0)
-	, sizeNumbers(0)
+	:count_digits(0)
+	, size_numbers(0)
 	, numbers(0)
 {
 	std::cout << numbers.size();
 }
 MasterMind::MasterMind(const int& n)
-	: countDigits(n)
-	, sizeNumbers(pow(10, countDigits))
-	, numbers(sizeNumbers)
+	: count_digits(n)
+	, size_numbers(pow(10, count_digits))
+	, numbers(size_numbers)
 {
 
 }
 void MasterMind::generateNDigitNumbers()
 {
-	int size = sizeNumbers / 10;
+	int size = size_numbers / 10;
 	int count = 0;
-	for (int i = sizeNumbers; i < sizeNumbers + size; ++i) {
+	for (int i = size_numbers; i < size_numbers + size; ++i) {
 		std::string str = std::to_string(i);
 		for (int j = 1; j < str.size(); ++j)
 		{
@@ -32,7 +32,7 @@ void MasterMind::generateNDigitNumbers()
 		}
 		++count;
 	}
-	for (int i = sizeNumbers / 10; i < sizeNumbers; ++i) {
+	for (int i = size_numbers / 10; i < size_numbers; ++i) {
 		std::string str = std::to_string(i);
 		for (int j = 0; j < str.size(); ++j)
 		{
@@ -44,7 +44,7 @@ void MasterMind::generateNDigitNumbers()
 const std::vector<int>& MasterMind::randomNumber() const
 {
 	srand(time(0));
-	int index = rand() % sizeNumbers;
+	int index = rand() % size_numbers;
 	return numbers[index];
 }
 void MasterMind::printNumbers() const
@@ -55,7 +55,7 @@ void MasterMind::printNumbers() const
 		std::cout << "\n";
 	}
 }
-void MasterMind::New_Game()
+void MasterMind::newGame()
 {
 	system("cls");
 	generateNDigitNumbers();
@@ -69,12 +69,12 @@ void MasterMind::New_Game()
 		std::cout << "input your number's digits: ";
 		std::string firstNumberStr;
 		std::vector<int> currentNumber;
-		input_Number(currentNumber, firstNumberStr);
+		inputNumber(currentNumber, firstNumberStr);
 		firstInfo.push_back(firstNumberStr);
 
 		int countCorrectPosition;
 		int countCorrectDigit;
-		firstPlayer = Numbers_Check(currentNumber, rememberedNumber, firstInfo
+		firstPlayer = numbersCheck(currentNumber, rememberedNumber, firstInfo
 			, countCorrectDigit, countCorrectPosition);
 		std::cout << countCorrectDigit << " : " << countCorrectPosition << "\n";
 
@@ -94,7 +94,7 @@ void MasterMind::New_Game()
 		system("cls");
 	}
 }
-void MasterMind::Two_Player()
+void MasterMind::twoPlayer()
 {
 	system("cls");
 	generateNDigitNumbers();
@@ -121,9 +121,9 @@ void MasterMind::Two_Player()
 		int firstCountCorrectPosition;
 		std::vector<int> firstCurrentNumber;
 		std::string firstNumberStr;
-		input_Number(firstCurrentNumber, firstNumberStr);
+		inputNumber(firstCurrentNumber, firstNumberStr);
 		firstInfo.push_back(firstNumberStr);
-		first = Numbers_Check(firstCurrentNumber, rememberedNumber, firstInfo
+		first = numbersCheck(firstCurrentNumber, rememberedNumber, firstInfo
 			, firstCountCorrectDigit, firstCountCorrectPosition);
 		std::cout << firstCountCorrectDigit << " : " << firstCountCorrectPosition << "\n";
 		system("pause");
@@ -142,9 +142,9 @@ void MasterMind::Two_Player()
 		int secondCountCorrectPosition = 0;
 		std::vector<int> secondCurrentNumber;
 		std::string secondNumberStr;
-		input_Number(secondCurrentNumber, secondNumberStr);
+		inputNumber(secondCurrentNumber, secondNumberStr);
 		secondInfo.push_back(secondNumberStr);
-		second = Numbers_Check(secondCurrentNumber, rememberedNumber, secondInfo
+		second = numbersCheck(secondCurrentNumber, rememberedNumber, secondInfo
 			, secondCountCorrectDigit, secondCountCorrectPosition);
 		++iteracia;
 		std::cout << secondCountCorrectDigit << " : " << secondCountCorrectPosition << "\n";
@@ -180,7 +180,7 @@ void MasterMind::Two_Player()
 		system("cls");
 	}
 }
-void MasterMind::With_Computer()
+void MasterMind::withComputer()
 {
 	system("cls");
 	std::vector<std::string> firstInfo;
@@ -207,9 +207,9 @@ void MasterMind::With_Computer()
 		int firstCountCorrectPosition = 0;
 		std::vector<int> firstCurrentNumber;
 		std::string firstNumberStr;
-		input_Number(firstCurrentNumber, firstNumberStr);
+		inputNumber(firstCurrentNumber, firstNumberStr);
 		firstInfo.push_back(firstNumberStr);
-		first = Numbers_Check(firstCurrentNumber, rememberedNumber, firstInfo
+		first = numbersCheck(firstCurrentNumber, rememberedNumber, firstInfo
 			, firstCountCorrectDigit, firstCountCorrectPosition);
 		std::cout << firstCountCorrectDigit << " : " << firstCountCorrectPosition << "\n";
 		system("pause");
@@ -222,11 +222,11 @@ void MasterMind::With_Computer()
 		srand(time(0));
 		int index = rand() % computer.size();
 		std::vector<int> secondCurrentNumber = computer[index];
-		second = Numbers_Check(secondCurrentNumber, rememberedNumber, secondInfo
+		second = numbersCheck(secondCurrentNumber, rememberedNumber, secondInfo
 			, computerCountCorrectDigit, computerCountCorrectPosition);
 		if (!second)
 		{
-			Update_List(computer, secondCurrentNumber, secondInfo[secondInfo.size() - 1]);
+			updateList(computer, secondCurrentNumber, secondInfo[secondInfo.size() - 1]);
 		}
 		std::cout << "The computer was played.\n";
 		system("pause");
@@ -262,13 +262,13 @@ void MasterMind::With_Computer()
 		system("cls");
 	}
 }
-void MasterMind::Play_Computer()
+void MasterMind::playComputer()
 {
 	system("cls");
 	std::vector<int> rememberedNumber;
 	std::string str;
 	std::cout << "input remember number's digits: ";
-	input_Number(rememberedNumber, str);
+	inputNumber(rememberedNumber, str);
 	std::vector<std::string> Info_History;
 	Info_History.push_back(str);
 	generateNDigitNumbers();
@@ -282,7 +282,7 @@ void MasterMind::Play_Computer()
 		srand(time(0));
 		int index = rand() % computer.size();
 		std::vector<int> currentNumber = computer[index];
-		for (int i = 0; i < this->countDigits; ++i)
+		for (int i = 0; i < this->count_digits; ++i)
 		{
 			std::cout << currentNumber[i] << " ";
 		}
@@ -300,7 +300,7 @@ void MasterMind::Play_Computer()
 		Infodig.push_back(str1[0]);
 		Info_History.push_back(Infodig);
 
-		if (countCorrectDigit == this->countDigits && countCorrectPosition == this->countDigits)
+		if (countCorrectDigit == this->count_digits && countCorrectPosition == this->count_digits)
 		{
 			std::cout << "\tComputer is Winner!!!\n";
 			system("pause");
@@ -309,7 +309,7 @@ void MasterMind::Play_Computer()
 		}
 		else
 		{
-			Update_List(computer, currentNumber, Info_History[Info_History.size() - 1]);
+			updateList(computer, currentNumber, Info_History[Info_History.size() - 1]);
 		}
 		++iteracia;
 	}
@@ -322,15 +322,15 @@ void MasterMind::Play_Computer()
 }
 void MasterMind::menu()
 {
-	std::cout << std::setw(15) << newGame << " - New Game\n";
-	std::cout << std::setw(15) << twoPlayer << " - 2 Player\n";
-	std::cout << std::setw(15) << withComputer << " - With Computer\n";
-	std::cout << std::setw(15) << computer << " - Computer\n";
-	std::cout << std::setw(15) << quit << " - Exit\n";
+	std::cout << std::setw(15) << Comand::new_game << " - New Game\n";
+	std::cout << std::setw(15) << Comand::two_player << " - 2 Player\n";
+	std::cout << std::setw(15) << Comand::with_computer << " - With Computer\n";
+	std::cout << std::setw(15) << Comand::computer << " - Computer\n";
+	std::cout << std::setw(15) << Comand::quit << " - Exit\n";
 }
-void MasterMind::input_Number(std::vector<int>& CurrentNumber, std::string& str)
+void MasterMind::inputNumber(std::vector<int>& CurrentNumber, std::string& str)
 {
-	for (int i = 0; i < this->countDigits; ++i)
+	for (int i = 0; i < this->count_digits; ++i)
 	{
 		int digit;
 		std::cin >> digit;
@@ -339,7 +339,7 @@ void MasterMind::input_Number(std::vector<int>& CurrentNumber, std::string& str)
 		str.push_back(s1[0]);
 	}
 }
-const int& MasterMind::Intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber) const
+const int MasterMind::intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber) const
 {
 	std::vector<int> sortRememberedNumber = rememberedNumber;
 	std::vector<int> sortCurrentNumber = CurrentNumber;
@@ -350,20 +350,20 @@ const int& MasterMind::Intersection(const std::vector<int>& rememberedNumber, co
 		, sortCurrentNumber.begin(), sortCurrentNumber.end(), std::back_inserter(firstIntersec));
 	return firstIntersec.size();
 }
-bool MasterMind::Numbers_Check(const std::vector<int>& CurrentNumber
+bool MasterMind::numbersCheck(const std::vector<int>& CurrentNumber
 	, const std::vector<int>& rememberedNumber, std::vector<std::string>& Info
 	, int& CountCorrectDigit, int& CountCorrectPosition)
 {
 	bool b = false;
 	CountCorrectPosition = 0;
-	for (int j = 0; j < this->countDigits; ++j)
+	for (int j = 0; j < this->count_digits; ++j)
 	{
 		if (CurrentNumber[j] == rememberedNumber[j])
 			++CountCorrectPosition;
 	}
-	CountCorrectDigit = Intersection(rememberedNumber, CurrentNumber);
+	CountCorrectDigit = intersection(rememberedNumber, CurrentNumber);
 
-	if (CountCorrectDigit == this->countDigits && CountCorrectPosition == this->countDigits)
+	if (CountCorrectDigit == this->count_digits && CountCorrectPosition == this->count_digits)
 	{
 		b = true;
 	}
@@ -374,7 +374,7 @@ bool MasterMind::Numbers_Check(const std::vector<int>& CurrentNumber
 	Info.push_back(Infodig);
 	return b;
 }
-void MasterMind::Update_List(std::vector<std::vector<int>>& list
+void MasterMind::updateList(std::vector<std::vector<int>>& list
 	, std::vector<int>& CurrentNumber, std::string& Info)
 {
 	std::vector<std::vector<int>> CurrentList;
@@ -383,12 +383,12 @@ void MasterMind::Update_List(std::vector<std::vector<int>>& list
 	for (int i = 0; i < list.size(); ++i)
 	{
 		int CountCorrectPosition = 0;
-		for (int j = 0; j < this->countDigits; ++j)
+		for (int j = 0; j < this->count_digits; ++j)
 		{
 			if (CurrentNumber[j] == list[i][j])
 				++CountCorrectPosition;
 		}
-		int CountCorrectDigit = Intersection(CurrentNumber, list[i]);
+		int CountCorrectDigit = intersection(CurrentNumber, list[i]);
 		if (CountCorrectDigit == Digit && CountCorrectPosition == Position)
 		{
 			CurrentList.push_back(list[i]);

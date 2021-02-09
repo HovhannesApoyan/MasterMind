@@ -1,6 +1,25 @@
-#ifndef MY_MASTER_MIND_H
-#define MY_MASTER_MIND_H
+#pragma once
 #include <vector>
+
+enum class Comand
+{
+	new_game = 1,
+	two_player = 2,
+	with_computer = 3,
+	computer = 4,
+	quit = 0,
+};
+
+inline constexpr int comandToInt(Comand com)
+{
+	return static_cast<int>(com);
+}
+
+inline std::ostream& operator <<(std::ostream& out, const Comand& com)
+{
+	out << static_cast<int>(com);
+	return out;
+}
 
 class MasterMind {
 public:
@@ -11,33 +30,23 @@ public:
 	const std::vector<int>& randomNumber()const;
 	void printNumbers()const;
 
-	void New_Game();
-	void Two_Player();
-	void With_Computer();
-	void Play_Computer();
+	void newGame();
+	void twoPlayer();
+	void withComputer();
+	void playComputer();
 	void menu();
 
-	void input_Number(std::vector<int>& CurrentNumber, std::string& str);
-	const int& Intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber)const;
-	bool Numbers_Check(const std::vector<int>& CurrentNumber
+	void inputNumber(std::vector<int>& CurrentNumber, std::string& str);
+	const int intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber)const;
+	bool numbersCheck(const std::vector<int>& CurrentNumber
 		, const std::vector<int>& rememberedNumber, std::vector<std::string>& Info
 		, int& CountCorrectDigit, int& CountCorrectPosition);
-	void Update_List(std::vector<std::vector<int>>& list,
+	void updateList(std::vector<std::vector<int>>& list,
 		std::vector<int>& CurrentNumber, std::string& Info);
-
-	enum Comand
-	{
-		newGame = 1,
-		twoPlayer = 2,
-		withComputer = 3,
-		computer = 4,
-		quit = 0,
-	};
 
 	~MasterMind();
 private:
-	int countDigits;
-	int sizeNumbers;
+	int count_digits;
+	int size_numbers;
 	std::vector<std::vector<int>> numbers;
 };
-#endif

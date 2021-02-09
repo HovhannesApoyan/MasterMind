@@ -6,8 +6,8 @@
 #include <cctype>
 #include "MasterMind.h"
 
-MasterMind Master_Mind_Object();
-int Input_Comand();
+MasterMind masterMindObject();
+int inputComand();
 
 int main()
 {
@@ -16,21 +16,21 @@ int main()
 	{
 		system("cls");
 		mind.menu();
-		switch (Input_Comand())
+		switch (inputComand())
 		{
-		case mind.newGame:
-			Master_Mind_Object().New_Game();
+		case comandToInt(Comand::new_game):
+			masterMindObject().newGame();
 			break;
-		case mind.twoPlayer:
-			Master_Mind_Object().Two_Player();
+		case comandToInt(Comand::two_player):
+			masterMindObject().twoPlayer();
 			break;
-		case mind.withComputer:
-			Master_Mind_Object().With_Computer();
+		case comandToInt(Comand::with_computer):
+			masterMindObject().withComputer();
 			break;
-		case mind.computer:
-			Master_Mind_Object().Play_Computer();
+		case comandToInt(Comand::computer):
+			masterMindObject().playComputer();
 			break;
-		case mind.quit:
+		case comandToInt(Comand::quit):
 			exit(0);
 			break;
 		default:
@@ -41,7 +41,7 @@ int main()
 	}
 }
 
-MasterMind Master_Mind_Object()
+MasterMind masterMindObject()
 {
 	system("cls");
 	int n;
@@ -52,7 +52,8 @@ MasterMind Master_Mind_Object()
 	} while (n <= 1 || n >= 7);
 	return MasterMind(n);
 }
-int Input_Comand()
+
+int inputComand()
 {
 	std::string str;
 	int comand;
