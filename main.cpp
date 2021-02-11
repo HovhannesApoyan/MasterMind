@@ -70,6 +70,7 @@ int inputComand()
 	{
 		comand = -1;
 	}
+	system("cls");
 	return comand;
 }
 
