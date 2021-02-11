@@ -1,49 +1,34 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <string>
+#include <iomanip>
+#include <algorithm>
 #include <windows.h>
-#include "CPUPlayer.h"
-#include "HumanConsolePlayer.h"
+#include <cctype>
 #include "MasterMind.h"
 
+MasterMind masterMindObject();
 int inputComand();
-void PrepareForANewGame();
 
 int main()
 {
-	srand(time(nullptr));
-	std::cout << "Welcome to Mastermind.\n";
-
+	MasterMind mind;
 	while (true)
 	{
 		system("cls");
-		MasterMind::menu();
+		mind.menu();
 		switch (inputComand())
 		{
 		case comandToInt(Comand::new_game):
-			//TODO
+			masterMindObject().newGame();
 			break;
-		case comandToInt(Comand::human_with_human):
-		{
-			HumanConsolePlayer h1("Armen");
-			HumanConsolePlayer h2("Ashot");
-			MasterMind g(&h1, &h2);
-			std::cout << g.Play()->GetName();
-			system("pause");
+		case comandToInt(Comand::two_player):
+			masterMindObject().twoPlayer();
 			break;
-		}
-		case comandToInt(Comand::human_with_computer):
-		{
-			HumanConsolePlayer h1("Armen");
-			CPUPlayer c2("Jack");
-			MasterMind g(&h1, &c2);
-			std::cout << g.Play()->GetName();
-			system("pause");
+		case comandToInt(Comand::with_computer):
+			masterMindObject().withComputer();
 			break;
-		}
 		case comandToInt(Comand::computer):
-			//TODO
+			masterMindObject().playComputer();
 			break;
 		case comandToInt(Comand::quit):
 			exit(0);
@@ -54,6 +39,18 @@ int main()
 			break;
 		}
 	}
+}
+
+MasterMind masterMindObject()
+{
+	system("cls");
+	int n;
+	std::cout << std::setw(10) << "The digits are from (2;6).\n";
+	do {
+		std::cout << "input count digits: ";
+		std::cin >> n;
+	} while (n <= 1 || n >= 7);
+	return MasterMind(n);
 }
 
 int inputComand()
@@ -71,11 +68,4 @@ int inputComand()
 		comand = -1;
 	}
 	return comand;
-}
-
-void PrepareForAGame()//TODO
-{
-	std::cout << "input remember number's 4 digits:";
-	std::string line;
-	getline(std::cin, line);
 }

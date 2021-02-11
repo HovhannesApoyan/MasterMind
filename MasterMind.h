@@ -1,12 +1,27 @@
 #pragma once
-#include <vector>
+#include "IPlayer.h"
+#include "CommonTypes.h"
+#include <boost/format.hpp>
+
+class MasterMind
+{
+public:
+	MasterMind(IPlayer* p1, IPlayer* p2);
+	IPlayer* Play();
+	static void menu();
+private:
+	IPlayer* players[2];
+	int turn;
+
+	void PrepareForANewGame();
+};
 
 enum class Comand
 {
 	new_game = 1,
-	two_player = 2,
-	with_computer = 3,
-	computer = 4,
+	human_with_human,
+	human_with_computer,
+	computer,
 	quit = 0,
 };
 
@@ -20,33 +35,3 @@ inline std::ostream& operator <<(std::ostream& out, const Comand& com)
 	out << static_cast<int>(com);
 	return out;
 }
-
-class MasterMind {
-public:
-	explicit MasterMind();
-	MasterMind(const int& n);
-	const std::vector<std::vector<int>>& getNumbers()const;
-	void generateNDigitNumbers();
-	const std::vector<int>& randomNumber()const;
-	void printNumbers()const;
-
-	void newGame();
-	void twoPlayer();
-	void withComputer();
-	void playComputer();
-	void menu();
-
-	void inputNumber(std::vector<int>& CurrentNumber, std::string& str);
-	const int intersection(const std::vector<int>& rememberedNumber, const std::vector<int>& CurrentNumber)const;
-	bool numbersCheck(const std::vector<int>& CurrentNumber
-		, const std::vector<int>& rememberedNumber, std::vector<std::string>& Info
-		, int& CountCorrectDigit, int& CountCorrectPosition);
-	void updateList(std::vector<std::vector<int>>& list,
-		std::vector<int>& CurrentNumber, std::string& Info);
-
-	~MasterMind();
-private:
-	int count_digits;
-	int size_numbers;
-	std::vector<std::vector<int>> numbers;
-};

@@ -104,10 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\IT\C++\Armenian Code Academy\slayd\Homework_7\Boost\boost_1_72_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\IT\C++\Armenian Code Academy\slayd\Homework_7\Boost\boost_1_72_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,11 +149,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommonTypes.cpp" />
+    <ClCompile Include="CPUPlayer.cpp" />
+    <ClCompile Include="HumanConsolePlayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MasterMind.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonTypes.h" />
+    <ClInclude Include="CPUPlayer.h" />
+    <ClInclude Include="HumanConsolePlayer.h" />
+    <ClInclude Include="IPlayer.h" />
     <ClInclude Include="MasterMind.h" />
+    <ClInclude Include="PlayerBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
